@@ -4,18 +4,18 @@ from datetime import date
 import re
 
 def getArticles(website):
-    ny_paper = newspaper.build(website)
+    newspaper_built = newspaper.build(website)
     dict4df = dict()
     dict4df["url"] = list()
     dict4df["title"] = list()
     dict4df["text"] = list()
     dict4df["date"] = list()
     today = date.today()
-    re_pattern = re.compile("religion|ritual|\bcult\b|purity|sacred|holy|religious", re.IGNORECASE)
+    re_pattern = re.compile("religion|ritual|\bcult\b|purity|sacred|holy|religious|heilig|\bkult\b", re.IGNORECASE)
     matches = 0
-    print(f"Articles to search: {len(ny_paper.articles)}")
+    print(f"Articles to search: {len(newspaper_built.articles)}")
 
-    for num, article in enumerate(ny_paper.articles):
+    for num, article in enumerate(newspaper_built.articles):
         article.download()
         article.parse()
         #print(f"Downloading {num} article!")
@@ -33,4 +33,4 @@ def getArticles(website):
     # STATUS
 
     with open("religionml_scraper_STATUS.txt", "a", encoding="utf-8") as f:
-        f.write(f"{today}: Attempted to download {matches} articles!")
+        f.write(f"{today}: Attempted to download {matches} articles from {website}!\n")
