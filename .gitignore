@@ -1,0 +1,5 @@
+env
+__pycache__/
+.vscode/
+religionml_newspaper.csv
+religionml_scraper_STATUS.txt
