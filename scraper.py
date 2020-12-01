@@ -16,16 +16,19 @@ def getArticles(website):
     print(f"Articles to search: {len(newspaper_built.articles)}")
 
     for num, article in enumerate(newspaper_built.articles):
-        article.download()
-        article.parse()
-        #print(f"Downloading {num} article!")
-        #print(f"Article title: { article.title }")
-        if re_pattern.search(article.text):
-            dict4df["url"].append(article.url)
-            dict4df["title"].append(article.title)
-            dict4df["text"].append(article.text)
-            dict4df["date"].append(today)
-            matches += 1
+        try:
+            article.download()
+            article.parse()
+            #print(f"Downloading {num} article!")
+            #print(f"Article title: { article.title }")
+            if re_pattern.search(article.text):
+                dict4df["url"].append(article.url)
+                dict4df["title"].append(article.title)
+                dict4df["text"].append(article.text)
+                dict4df["date"].append(today)
+                matches += 1
+        except:
+            print("some problem occurred!")
 
     df = pd.DataFrame.from_dict(dict4df)
     df.to_csv("religionml_newspaper.csv", header=False, mode="a")
